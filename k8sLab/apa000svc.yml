@@ -1,0 +1,14 @@
+# kubectl apply -f k8sLab/apa000svc.yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: apa000svc
+spec:
+  type: NodePort 
+  selector:
+    app: apa000kube
+  ports:
+  - port: 8099
+    targetPort: 80
+    protocol: TCP
+    nodePort: 30080

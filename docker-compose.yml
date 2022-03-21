@@ -1,0 +1,35 @@
+version: '1'
+services:
+  mysql000ex1:
+    image: mysql
+    networks:
+      - wordpress000net1
+    volumes:
+      - mysql000vol1:/var/lib/sql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: wordpress000db
+      MYSQL_USER: wordpress000app
+      MYSQL_PASSWORD: 1234
+  wordpress000ex1:
+    depends_on:
+      - mysql000ex1
+    image: wordpress
+    networks:
+      - wordpress000net1
+    volumes:
+      - wordpress000vol1:/var/www/html
+    ports:
+      - 8080:80
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: mysql000ex1
+      WORDPRESS_DB_NAME: wordpress000db
+      WORDPRESS_DB_USER: wordpress000app
+      WORDPRESS_DB_PASSWORD: 1234
+networks:
+  wordpress000net1:
+volumes:
+  mysql000vol1:
+  wordpress000vol1:
